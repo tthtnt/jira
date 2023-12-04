@@ -1,4 +1,4 @@
-import { cleanObject } from "utils"
+import { cleanObject, useDebounce, useMount } from "utils"
 import { List } from "./list"
 import { SearchPanel } from "./search-pannel"
 import { useEffect, useState } from "react"
@@ -11,6 +11,7 @@ export const ProjectListScreen = () => {
         name: '',
         personId: ''
     })
+    const debouncedParam = useDebounce(param, 500)
     
     const [list, setList] = useState([])
 
@@ -20,15 +21,15 @@ export const ProjectListScreen = () => {
                 setList(await res.json())
             }
         })
-    }, [param])
+    }, [debouncedParam])
 
-    useEffect(() => {
+    useMount(() => {
         fetch(`${apiUrl}/users`).then(async res => {
             if(res.ok) {
                 setUsers(await res.json())
             }
         })
-    }, [])
+    })
 
 
     return <div>
