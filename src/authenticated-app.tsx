@@ -6,7 +6,7 @@ export const AuthenticatedApp = () => {
   return (
     <div>
       <ProjectListScreen />
-      <button onClick={() => logout}>登出</button>
+      <button onClick={() => logout()}>登出</button>
     </div>
   );
 };
