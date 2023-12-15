@@ -4,7 +4,7 @@ import { useAuth } from "context/auth-context";
 import { ReactComponent as SoftwareLogo } from "assets/software-logo.svg";
 import React from "react";
 import { ProjectListScreen } from "screens/project-list";
-import { Dropdown, Menu } from "antd";
+import { Button, Dropdown, Menu, MenuProps } from "antd";
 
 /**
  * grid 和 flex 各自的应用场景
@@ -20,6 +20,16 @@ import { Dropdown, Menu } from "antd";
 
 export const AuthenticatedApp = () => {
   const { logout, user } = useAuth();
+  const items: MenuProps["items"] = [
+    {
+      key: "logout",
+      label: (
+        <Button onClick={() => logout()} type={"link"}>
+          登出
+        </Button>
+      ),
+    },
+  ];
   return (
     <Container>
       <Header between={true}>
@@ -29,16 +39,8 @@ export const AuthenticatedApp = () => {
           <h2>用户</h2>
         </HeaderLeft>
         <HeaderRight>
-          <Dropdown
-            overlay={
-              <Menu>
-                <Menu.Item key={"logout"} onClick={() => logout()}>
-                  登出
-                </Menu.Item>
-              </Menu>
-            }
-          >
-            <a onClick={(e) => e.preventDefault()}>Hi, {user?.name}</a>
+          <Dropdown menu={{ items }}>
+            <Button type={"link"}>Hi, {user?.name}</Button>
           </Dropdown>
         </HeaderRight>
       </Header>
