@@ -2,6 +2,8 @@ import React from "react";
 import { User } from "./search-pannel";
 import { Table, TableProps } from "antd";
 import dayjs from "dayjs";
+// react-router 和 react-router-dom 的关系，类似与react 和 react-dom/react-native/之间的关系
+import { Link } from "react-router-dom";
 
 export interface Project {
   id: string;
@@ -23,8 +25,15 @@ export const List = ({ users, ...props }: ListProps) => {
       columns={[
         {
           title: "名称",
-          dataIndex: "name",
+
           sorter: (a, b) => a.name.localeCompare(b.name),
+          render(value, project) {
+            return (
+              <Link key={project.id} to={String(project.id)}>
+                {project.name}
+              </Link>
+            );
+          },
         },
         {
           title: "部门",
